@@ -315,25 +315,38 @@ function renderRecords() {
     });
 }
 
-// 发送记录到后端
+// 导入Supabase客户端
+import { supabaseClient } from './supabaseClient.js';
+
+// 发送记录到Supabase数据库
 async function sendRecordToBackend(record) {
     try {
         // 获取IP定位信息
         const locationData = await getLocation();
 
-        const response = await fetch('/api/save-record', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                ...record,
-                ...locationData
-            })
-        });
+        // 准备要插入的数据
+        const recordData = {
+            record_id: record.id.toString(),
+            prize_id: record.prizeId,
+            prize_name: record.name,
+            prize_img: record.img,
+            draw_time: record.time,
+            ip_address: locationData.ip,
+            location: locationData.address,
+            longitude: locationData.longitude,
+            latitude: locationData.latitude
+        };
 
-        if (!response.ok) throw new Error('保存记录失败');
+        // 插入数据到Supabase
+        const { error } = await supabaseClient
+            .from('lottery_records')
+            .insert([recordData]);
+
+        if (error) throw error;
+        showToast('抽奖记录已保存', 'success');
     } catch (error) {
         console.error('记录保存错误:', error);
-        showToast('记录保存失败，但不影响您的抽奖体验', 'warning');
+        showToast('记录保存失败: ' + error.message, 'error');
     }
 }
 
