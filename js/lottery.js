@@ -27,7 +27,7 @@ const nextBtn = document.querySelector('.next-btn');
 
 // 抽奖记录存储 - 修改为会话存储，页面关闭后自动清空
 let lotteryRecords = [];
-let remainingDraws = 3; // 默认每日3次抽奖机会
+let remainingDraws = 5; // 默认每日3次抽奖机会
 let currentSlide = 0;
 const slideWidth = 300; // 奖品项宽度 + 间距
 
