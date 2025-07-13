@@ -36,8 +36,12 @@
             "dest": "/frontend/js/$1"
         },
         {
-            "src": "/(.*)",
+            "src": "/",
             "dest": "/frontend/pages/index.html"
+        },
+        {
+            "src": "/(.*)",
+            "dest": "/frontend/pages/$1.html"
         }
     ],
     "env": {
