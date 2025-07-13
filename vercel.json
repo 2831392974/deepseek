@@ -1,0 +1,21 @@
+{
+  "build": {
+    "use": "@vercel/static",
+    "src": "**/*"
+  },
+  "routes": [
+    {
+      "src": "/",
+      "dest": "/index.html"
+    },
+    {
+      "src": "/admin",
+      "dest": "/admin.html"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/$1"
+    }
+  ],
+  "public": "."
+}
